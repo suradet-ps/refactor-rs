@@ -7,8 +7,13 @@
       </div>
       <div class="header-actions">
         <div class="btn-group">
-          <button class="btn-icon" @click="resetCode" title="Reset code">
-            <RotateCcw :size="16" />
+          <button
+            class="btn-icon"
+            @click="resetCode"
+            title="Reset code"
+            aria-label="Reset code to starter"
+          >
+            <RotateCcw :size="16" aria-hidden="true" />
           </button>
         </div>
 
@@ -17,46 +22,70 @@
             class="btn-run"
             @click="runCode"
             :disabled="runningAction !== null"
+            :aria-busy="runningAction === 'run'"
           >
-            <Play v-if="runningAction !== 'run'" :size="14" />
-            <Loader2 v-else :size="14" class="spin" />
+            <Play v-if="runningAction !== 'run'" :size="14" aria-hidden="true" />
+            <Loader2 v-else :size="14" class="spin" aria-hidden="true" />
             {{ runningAction === 'run' ? 'Running...' : 'Run' }}
           </button>
           <button
             class="btn-test"
             @click="runTests"
             :disabled="runningAction !== null"
+            :aria-busy="runningAction === 'test'"
           >
-            <Bug v-if="runningAction !== 'test'" :size="14" />
-            <Loader2 v-else :size="14" class="spin" />
+            <Bug v-if="runningAction !== 'test'" :size="14" aria-hidden="true" />
+            <Loader2 v-else :size="14" class="spin" aria-hidden="true" />
             {{ runningAction === 'test' ? 'Running...' : 'Tests' }}
           </button>
         </div>
 
         <div class="btn-group">
-          <button class="btn-ghost" @click="showSolution = !showSolution">
-            <Eye v-if="!showSolution" :size="16" />
-            <EyeOff v-else :size="16" />
+          <button
+            class="btn-ghost"
+            @click="showSolution = !showSolution"
+            :aria-label="showSolution ? 'Hide solution' : 'Show solution'"
+            :aria-expanded="showSolution"
+          >
+            <Eye v-if="!showSolution" :size="16" aria-hidden="true" />
+            <EyeOff v-else :size="16" aria-hidden="true" />
           </button>
           <button
             class="btn-done"
             :class="{ active: isCompleted }"
             @click="markCompleted"
+            :aria-pressed="isCompleted"
           >
-            <CheckCircle v-if="isCompleted" :size="14" />
-            <Circle v-else :size="14" />
+            <CheckCircle v-if="isCompleted" :size="14" aria-hidden="true" />
+            <Circle v-else :size="14" aria-hidden="true" />
             {{ isCompleted ? 'Done' : 'Complete' }}
           </button>
         </div>
       </div>
     </div>
 
-    <div v-if="showSolution" class="modal-overlay" @click.self="showSolution = false">
-      <div class="modal">
+    <div
+      v-if="showSolution"
+      class="modal-overlay"
+      @click.self="showSolution = false"
+      @keydown.escape="showSolution = false"
+    >
+      <div
+        ref="modalRef"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Solution"
+        tabindex="-1"
+      >
         <div class="modal-header">
           <span class="modal-title">Solution</span>
-          <button class="modal-close" @click="showSolution = false">
-            <X :size="18" />
+          <button
+            class="modal-close"
+            @click="showSolution = false"
+            aria-label="Close solution"
+          >
+            <X :size="18" aria-hidden="true" />
           </button>
         </div>
         <div ref="solutionContainer" class="modal-code" />
@@ -65,13 +94,13 @@
 
     <div class="panels">
       <div class="editor-panel">
-        <div ref="editorContainer" class="code-editor" />
+        <div ref="editorContainer" class="code-editor" role="region" aria-label="Code editor" />
       </div>
 
       <div class="divider" />
 
       <div class="output-panel">
-        <div class="output-container" ref="outputContainer">
+        <div class="output-container" ref="outputContainer" role="region" aria-label="Program output">
           <pre v-if="output" class="output-text">{{ output }}</pre>
           <div v-else class="output-placeholder">
             <p>Run or Tests to see output</p>
@@ -109,6 +138,7 @@ const runningAction = ref<'run' | 'test' | null>(null)
 const outputContainer = ref<HTMLElement | null>(null)
 const editorContainer = ref<HTMLElement | null>(null)
 const solutionContainer = ref<HTMLElement | null>(null)
+const modalRef = ref<HTMLElement | null>(null)
 
 let editorView: EditorView | null = null
 let solutionView: EditorView | null = null
@@ -322,11 +352,44 @@ function destroySolutionEditor() {
   solutionView = null
 }
 
+let previousActiveElement: HTMLElement | null = null
+
+function trapFocus(e: KeyboardEvent) {
+  if (e.key !== 'Tab' || !modalRef.value) return
+
+  const focusable = modalRef.value.querySelectorAll<HTMLElement>(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+  )
+  if (focusable.length === 0) return
+
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+
+  if (e.shiftKey) {
+    if (document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    }
+  } else {
+    if (document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+}
+
 const stopSolutionWatch = watch(showSolution, (val) => {
   if (val) {
-    nextTick(() => createSolutionEditor())
+    previousActiveElement = document.activeElement as HTMLElement
+    nextTick(() => {
+      createSolutionEditor()
+      modalRef.value?.focus()
+      document.addEventListener('keydown', trapFocus)
+    })
   } else {
     destroySolutionEditor()
+    document.removeEventListener('keydown', trapFocus)
+    previousActiveElement?.focus()
   }
 })
 onScopeDispose(stopSolutionWatch)
@@ -339,6 +402,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   destroyEditor()
+  document.removeEventListener('keydown', trapFocus)
 })
 </script>
 

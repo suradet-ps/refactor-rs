@@ -1,7 +1,7 @@
 <template>
-  <div v-if="error" class="error-boundary">
+  <div v-if="error" class="error-boundary" role="alert">
     <div class="error-content">
-      <div class="error-icon">!</div>
+      <div class="error-icon" aria-hidden="true">!</div>
       <h1 class="error-title">Something went wrong</h1>
       <p class="error-message">{{ error.message }}</p>
       <div class="error-actions">
