@@ -6,42 +6,48 @@
         <h1 class="exercise-title">{{ exercise.title }}</h1>
       </div>
       <div class="header-actions">
-        <button class="btn btn-sm btn-secondary" @click="resetCode">
-          <RotateCcw :size="14" />
-          Reset
-        </button>
-        <button
-          class="btn btn-sm btn-primary"
-          @click="runCode"
-          :disabled="runningAction !== null"
-        >
-          <Play v-if="runningAction !== 'run'" :size="14" />
-          <Loader2 v-else :size="14" class="spin" />
-          {{ runningAction === 'run' ? 'Running...' : 'Run' }}
-        </button>
-        <button
-          class="btn btn-sm btn-secondary"
-          @click="runTests"
-          :disabled="runningAction !== null"
-        >
-          <Bug v-if="runningAction !== 'test'" :size="14" />
-          <Loader2 v-else :size="14" class="spin" />
-          {{ runningAction === 'test' ? 'Running...' : 'Tests' }}
-        </button>
-        <button class="btn btn-sm btn-tertiary" @click="showSolution = !showSolution">
-          <Eye v-if="!showSolution" :size="14" />
-          <EyeOff v-else :size="14" />
-          Solution
-        </button>
-        <button
-          class="btn btn-sm btn-primary"
-          @click="markCompleted"
-          :disabled="isCompleted"
-        >
-          <CheckCircle v-if="isCompleted" :size="14" />
-          <Circle v-else :size="14" />
-          {{ isCompleted ? 'Done' : 'Complete' }}
-        </button>
+        <div class="btn-group">
+          <button class="btn-icon" @click="resetCode" title="Reset code">
+            <RotateCcw :size="16" />
+          </button>
+        </div>
+
+        <div class="btn-group">
+          <button
+            class="btn-run"
+            @click="runCode"
+            :disabled="runningAction !== null"
+          >
+            <Play v-if="runningAction !== 'run'" :size="14" />
+            <Loader2 v-else :size="14" class="spin" />
+            {{ runningAction === 'run' ? 'Running...' : 'Run' }}
+          </button>
+          <button
+            class="btn-test"
+            @click="runTests"
+            :disabled="runningAction !== null"
+          >
+            <Bug v-if="runningAction !== 'test'" :size="14" />
+            <Loader2 v-else :size="14" class="spin" />
+            {{ runningAction === 'test' ? 'Running...' : 'Tests' }}
+          </button>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-ghost" @click="showSolution = !showSolution">
+            <Eye v-if="!showSolution" :size="16" />
+            <EyeOff v-else :size="16" />
+          </button>
+          <button
+            class="btn-done"
+            @click="markCompleted"
+            :disabled="isCompleted"
+          >
+            <CheckCircle v-if="isCompleted" :size="14" />
+            <Circle v-else :size="14" />
+            {{ isCompleted ? 'Done' : 'Complete' }}
+          </button>
+        </div>
       </div>
     </div>
 
@@ -343,21 +349,141 @@ onUnmounted(() => {
 }
 
 .exercise-num {
-  font: var(--text-eyebrow);
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--color-primary);
+  color: var(--color-body-mid);
 }
 
 .exercise-title {
-  font: var(--text-body-sm-strong);
+  font-size: 14px;
+  font-weight: 600;
   margin: 0;
+  color: var(--color-ink);
 }
 
 .header-actions {
   display: flex;
-  gap: var(--space-xs);
-  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--color-canvas-soft);
+  border-radius: 6px;
+  border: 1px solid var(--color-canvas-soft);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  background: transparent;
+  color: var(--color-body);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-icon:hover {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+.btn-run {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 28px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-run:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn-test {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 28px;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  border: 1px solid var(--color-canvas-soft);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-test:hover:not(:disabled) {
+  background: var(--color-canvas-soft);
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  background: transparent;
+  color: var(--color-body);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--color-canvas-soft);
+  color: var(--color-ink);
+}
+
+.btn-done {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 28px;
+  background: transparent;
+  color: var(--color-body);
+  border: 1px solid var(--color-canvas-soft);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-done:hover:not(:disabled) {
+  background: var(--color-canvas-soft);
+  color: var(--color-ink);
+  border-color: var(--color-body-mid);
+}
+
+.btn-done:disabled {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+  opacity: 0.8;
+  cursor: default;
 }
 
 .panels {
@@ -544,15 +670,12 @@ onUnmounted(() => {
   .exercise-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-sm);
   }
 
   .header-actions {
     width: 100%;
-    flex-wrap: wrap;
-  }
-
-  .header-actions .btn {
-    flex: 1;
+    justify-content: flex-end;
   }
 }
 </style>
