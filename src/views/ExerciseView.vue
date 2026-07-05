@@ -91,7 +91,7 @@ import {
   Eye, EyeOff, CheckCircle, Circle,
   RotateCcw, Play, Loader2, Bug, X
 } from 'lucide-vue-next'
-import { EditorView, keymap } from '@codemirror/view'
+import { EditorView, keymap, lineNumbers } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
 import { rust } from '@codemirror/lang-rust'
 import { oneDark } from '@codemirror/theme-one-dark'
@@ -139,6 +139,7 @@ function createEditor() {
   const state = EditorState.create({
     doc: code.value,
     extensions: [
+      lineNumbers(),
       keymap.of([...defaultKeymap, indentWithTab]),
       rust(),
       oneDark,
@@ -360,6 +361,12 @@ onUnmounted(() => {
 
 .code-editor :deep(.cm-scroller) {
   overflow: auto;
+}
+
+.code-editor :deep(.cm-gutters) {
+  background: #0d1117;
+  border-right: 1px solid #30363d;
+  color: #484f58;
 }
 
 .divider {
