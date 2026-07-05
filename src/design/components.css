@@ -1,0 +1,221 @@
+/* ============================================
+   refacto.rs Component Styles
+   ============================================ */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  font: var(--text-button-md);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  background: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+  background: var(--color-ink);
+  color: var(--color-on-primary);
+  border-color: var(--color-ink);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-ink-soft);
+  border-color: var(--color-ink-soft);
+}
+
+.btn-tertiary {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.btn-tertiary:hover:not(:disabled) {
+  background: var(--color-canvas-soft);
+}
+
+.btn-text {
+  background: transparent;
+  color: var(--color-ink);
+  padding: var(--space-sm) var(--space-lg);
+  font: var(--text-button-sm);
+}
+
+.btn-text:hover:not(:disabled) {
+  background: var(--color-canvas-soft);
+}
+
+.btn-sm {
+  padding: var(--space-xs) var(--space-md);
+  font: var(--text-button-sm);
+}
+
+.btn-lg {
+  padding: var(--space-lg) var(--space-2xl);
+  font-size: 20px;
+}
+
+/* Cards */
+.card {
+  background: var(--color-canvas-soft);
+  color: var(--color-ink);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+}
+
+.card-bordered {
+  background: var(--color-canvas);
+  border: 1px solid var(--color-ink);
+}
+
+.card-dark {
+  background: var(--color-ink);
+  color: var(--color-on-primary);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-canvas-soft);
+  color: var(--color-ink);
+  font: var(--text-body-sm);
+  border-radius: var(--radius-pill);
+}
+
+.badge-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* Input */
+.input {
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-sm);
+  font: var(--text-body-md);
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.input::placeholder {
+  color: var(--color-mute);
+}
+
+/* Eyebrow */
+.eyebrow {
+  font: var(--text-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-body-mid);
+}
+
+/* Section */
+.section {
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+.section-cream {
+  background: var(--color-canvas-soft);
+}
+
+.section-dark {
+  background: var(--color-ink);
+  color: var(--color-on-primary);
+}
+
+/* Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+/* Code block with line numbers */
+.code-block {
+  position: relative;
+  background: var(--color-ink);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-block-content {
+  padding: var(--space-lg);
+  overflow-x: auto;
+  font: var(--text-code);
+  color: var(--color-canvas);
+  line-height: 1.6;
+}
+
+/* Toast / Status */
+.toast {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--color-ink);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-medium);
+  z-index: var(--z-toast);
+  animation: slideIn 0.3s ease;
+}
+
+.toast-success {
+  background: var(--color-success);
+}
+
+.toast-error {
+  background: var(--color-error);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
