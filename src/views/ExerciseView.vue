@@ -96,7 +96,7 @@ import { EditorState } from '@codemirror/state'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView, keymap, lineNumbers } from '@codemirror/view'
 import { Bug, CheckCircle, Circle, Eye, EyeOff, Loader2, Play, RotateCcw, X } from 'lucide-vue-next'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onScopeDispose, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { exercises } from '@/data/exercises'
 
@@ -329,6 +329,7 @@ const stopSolutionWatch = watch(showSolution, (val) => {
     destroySolutionEditor()
   }
 })
+onScopeDispose(stopSolutionWatch)
 
 watch(() => route.params.id, loadCode, { immediate: true })
 
@@ -338,7 +339,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   destroyEditor()
-  stopSolutionWatch()
 })
 </script>
 
