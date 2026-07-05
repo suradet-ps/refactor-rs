@@ -45,8 +45,16 @@
       </div>
     </div>
 
-    <div v-if="showSolution" class="solution-banner">
-      <pre class="solution-code"><code>{{ exercise.solutionCode }}</code></pre>
+    <div v-if="showSolution" class="modal-overlay" @click.self="showSolution = false">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Solution</span>
+          <button class="modal-close" @click="showSolution = false">
+            <X :size="18" />
+          </button>
+        </div>
+        <pre class="modal-code"><code>{{ exercise.solutionCode }}</code></pre>
+      </div>
     </div>
 
     <div class="panels">
@@ -86,7 +94,7 @@ import { useRoute } from 'vue-router'
 import { exercises } from '@/data/exercises'
 import {
   Eye, EyeOff, CheckCircle, Circle,
-  RotateCcw, Play, Loader2, Bug
+  RotateCcw, Play, Loader2, Bug, X
 } from 'lucide-vue-next'
 
 const route = useRoute()
@@ -355,22 +363,69 @@ watch(code, saveCode)
   font: var(--text-body-sm);
 }
 
-.solution-banner {
-  background: var(--color-canvas);
-  border-bottom: 1px solid var(--color-canvas-soft);
-  max-height: 200px;
-  overflow-y: auto;
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: var(--space-xl);
+}
+
+.modal {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 720px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid #30363d;
   flex-shrink: 0;
 }
 
-.solution-code {
+.modal-title {
+  font: var(--text-body-sm-strong);
+  color: #c9d1d9;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background: #21262d;
+  color: #c9d1d9;
+}
+
+.modal-code {
   margin: 0;
   padding: var(--space-md);
-  background: var(--color-ink);
-  color: var(--color-canvas);
+  background: #0d1117;
+  color: #c9d1d9;
   font: var(--text-code);
   line-height: 1.6;
-  overflow-x: auto;
+  overflow: auto;
+  flex: 1;
 }
 
 .not-found {
