@@ -80,6 +80,10 @@ bun run dev
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
+## Acknowledgements
+
+Exercises are based on [Refactoring Rust](https://github.com/corrode/refactoring-rust) by [corrode](https://github.com/corrode) — a hands-on workshop for writing more idiomatic, maintainable Rust.
+
 ## License
 
 [MIT](LICENSE)
