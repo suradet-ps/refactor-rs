@@ -59,12 +59,7 @@
 
     <div class="panels">
       <div class="editor-panel">
-        <textarea
-          v-model="code"
-          class="code-editor"
-          spellcheck="false"
-          @keydown.tab.prevent="insertTab"
-        />
+        <div ref="editorContainer" class="code-editor" />
       </div>
 
       <div class="divider" />
@@ -89,13 +84,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { exercises } from '@/data/exercises'
 import {
   Eye, EyeOff, CheckCircle, Circle,
   RotateCcw, Play, Loader2, Bug, X
 } from 'lucide-vue-next'
+import { EditorView, keymap } from '@codemirror/view'
+import { EditorState } from '@codemirror/state'
+import { rust } from '@codemirror/lang-rust'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { defaultKeymap, indentWithTab } from '@codemirror/commands'
 
 const route = useRoute()
 
@@ -104,6 +104,9 @@ const output = ref('')
 const showSolution = ref(false)
 const runningAction = ref<'run' | 'test' | null>(null)
 const outputContainer = ref<HTMLElement | null>(null)
+const editorContainer = ref<HTMLElement | null>(null)
+
+let editorView: EditorView | null = null
 
 const completedKey = 'refacto-completed'
 const codeKey = 'refacto-code'
@@ -124,11 +127,54 @@ const isCompleted = computed(() => {
   }
 })
 
+function createEditor() {
+  if (!editorContainer.value) return
+
+  const updateListener = EditorView.updateListener.of((update) => {
+    if (update.docChanged) {
+      code.value = update.state.doc.toString()
+    }
+  })
+
+  const state = EditorState.create({
+    doc: code.value,
+    extensions: [
+      keymap.of([...defaultKeymap, indentWithTab]),
+      rust(),
+      oneDark,
+      EditorView.lineWrapping,
+      updateListener,
+    ],
+  })
+
+  editorView = new EditorView({
+    state,
+    parent: editorContainer.value,
+  })
+}
+
+function destroyEditor() {
+  editorView?.destroy()
+  editorView = null
+}
+
+function setEditorContent(newCode: string) {
+  if (!editorView) return
+  editorView.dispatch({
+    changes: {
+      from: 0,
+      to: editorView.state.doc.length,
+      insert: newCode,
+    },
+  })
+}
+
 function loadCode() {
   if (!exercise.value) return
   const saved = localStorage.getItem(`${codeKey}-${exercise.value.id}`)
   code.value = saved || exercise.value.starterCode
   output.value = ''
+  setEditorContent(code.value)
 }
 
 function saveCode() {
@@ -141,17 +187,7 @@ function resetCode() {
   code.value = exercise.value.starterCode
   output.value = ''
   saveCode()
-}
-
-function insertTab() {
-  const textarea = document.querySelector('.code-editor') as HTMLTextAreaElement
-  if (!textarea) return
-  const start = textarea.selectionStart
-  const end = textarea.selectionEnd
-  code.value = code.value.substring(0, start) + '    ' + code.value.substring(end)
-  setTimeout(() => {
-    textarea.selectionStart = textarea.selectionEnd = start + 4
-  }, 0)
+  setEditorContent(code.value)
 }
 
 function scrollToOutput() {
@@ -244,7 +280,14 @@ function markCompleted() {
 }
 
 watch(() => route.params.id, loadCode, { immediate: true })
-watch(code, saveCode)
+
+onMounted(() => {
+  createEditor()
+})
+
+onUnmounted(() => {
+  destroyEditor()
+})
 </script>
 
 <style scoped>
@@ -306,20 +349,17 @@ watch(code, saveCode)
 .code-editor {
   width: 100%;
   flex: 1;
-  padding: var(--space-md);
-  background: #0d1117;
-  color: #c9d1d9;
   border: 1px solid #30363d;
   border-radius: var(--radius-md);
-  font: var(--text-code);
-  line-height: 1.6;
-  resize: none;
-  tab-size: 4;
+  overflow: hidden;
 }
 
-.code-editor:focus {
-  outline: 1px solid var(--color-primary);
-  border-color: var(--color-primary);
+.code-editor :deep(.cm-editor) {
+  height: 100%;
+}
+
+.code-editor :deep(.cm-scroller) {
+  overflow: auto;
 }
 
 .divider {
