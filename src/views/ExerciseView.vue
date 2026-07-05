@@ -578,9 +578,9 @@ onUnmounted(() => {
 }
 
 .editor-panel {
-  flex: 1;
+  flex: 2;
   min-height: 0;
-  max-height: 50vh;
+  max-height: 70vh;
   display: flex;
 }
 
@@ -615,7 +615,7 @@ onUnmounted(() => {
 .output-panel {
   flex: 1;
   min-height: 150px;
-  max-height: 40vh;
+  max-height: 35vh;
   display: flex;
 }
 
