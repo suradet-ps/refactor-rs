@@ -240,28 +240,36 @@ interface PlaygroundResult {
 }
 
 async function evaluateCode(codeStr: string, tests: boolean): Promise<PlaygroundResult> {
-  const body = {
-    channel: 'stable',
-    mode: 'debug',
-    edition: '2021',
-    crateType: 'lib',
-    tests,
-    code: codeStr,
-    backtrace: false,
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 30_000)
+
+  try {
+    const body = {
+      channel: 'stable',
+      mode: 'debug',
+      edition: '2021',
+      crateType: 'lib',
+      tests,
+      code: codeStr,
+      backtrace: false,
+    }
+
+    const res = await fetch('https://play.rust-lang.org/execute', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    })
+
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(`Playground returned ${res.status}: ${text}`)
+    }
+
+    return res.json()
+  } finally {
+    clearTimeout(timeout)
   }
-
-  const res = await fetch('https://play.rust-lang.org/execute', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
-
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`Playground returned ${res.status}: ${text}`)
-  }
-
-  return res.json()
 }
 
 function formatResult(result: PlaygroundResult): string {
@@ -314,7 +322,7 @@ function destroySolutionEditor() {
   solutionView = null
 }
 
-watch(showSolution, (val) => {
+const stopSolutionWatch = watch(showSolution, (val) => {
   if (val) {
     nextTick(() => createSolutionEditor())
   } else {
@@ -330,6 +338,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   destroyEditor()
+  stopSolutionWatch()
 })
 </script>
 
