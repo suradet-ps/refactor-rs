@@ -1,5 +1,23 @@
 <template>
   <div class="exercise-view" v-if="exercise">
+    <router-link
+      v-if="prevExercise"
+      :to="`/exercise/${prevExercise.id}`"
+      class="nav-arrow nav-arrow-left"
+      aria-label="Previous exercise"
+    >
+      <ChevronLeft :size="24" aria-hidden="true" />
+    </router-link>
+
+    <router-link
+      v-if="nextExercise"
+      :to="`/exercise/${nextExercise.id}`"
+      class="nav-arrow nav-arrow-right"
+      aria-label="Next exercise"
+    >
+      <ChevronRight :size="24" aria-hidden="true" />
+    </router-link>
+
     <div class="exercise-header">
       <div class="header-info">
         <span class="exercise-num">Exercise {{ exercise.id }}</span>
@@ -124,7 +142,19 @@ import { rust } from '@codemirror/lang-rust'
 import { EditorState } from '@codemirror/state'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView, keymap, lineNumbers } from '@codemirror/view'
-import { Bug, CheckCircle, Circle, Eye, EyeOff, Loader2, Play, RotateCcw, X } from 'lucide-vue-next'
+import {
+  Bug,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Circle,
+  Eye,
+  EyeOff,
+  Loader2,
+  Play,
+  RotateCcw,
+  X,
+} from 'lucide-vue-next'
 import { computed, nextTick, onMounted, onScopeDispose, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { exercises } from '@/data/exercises'
@@ -149,6 +179,18 @@ const codeKey = 'refacto-code'
 const exercise = computed(() => {
   const id = Number(route.params.id)
   return exercises.find((e) => e.id === id)
+})
+
+const prevExercise = computed(() => {
+  const id = exercise.value?.id
+  if (!id) return null
+  return exercises.find((e) => e.id === id - 1) ?? null
+})
+
+const nextExercise = computed(() => {
+  const id = exercise.value?.id
+  if (!id) return null
+  return exercises.find((e) => e.id === id + 1) ?? null
 })
 
 const isCompleted = ref(false)
@@ -726,6 +768,39 @@ onUnmounted(() => {
   text-align: center;
 }
 
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-canvas-soft);
+  color: var(--color-body);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  opacity: 0.5;
+  border: 1px solid var(--color-canvas-inset);
+}
+
+.nav-arrow:hover {
+  opacity: 1;
+  background: var(--color-canvas-inset);
+  color: var(--color-ink);
+}
+
+.nav-arrow-left {
+  left: var(--space-md);
+}
+
+.nav-arrow-right {
+  right: var(--space-md);
+}
+
 .spin {
   animation: spin 1s linear infinite;
 }
@@ -761,6 +836,20 @@ onUnmounted(() => {
 
   .modal {
     height: 90vh;
+  }
+
+  .nav-arrow {
+    width: 36px;
+    height: 36px;
+    opacity: 0.4;
+  }
+
+  .nav-arrow-left {
+    left: var(--space-xs);
+  }
+
+  .nav-arrow-right {
+    right: var(--space-xs);
   }
 
   .exercise-header {
