@@ -111,6 +111,17 @@
   --transition-slow: 300ms ease;
 
   /* ==========================================
+     COLORS — Dark Theme (Code Editor / Output)
+     ========================================== */
+  --color-dark-canvas: #0d1117;
+  --color-dark-surface: #161b22;
+  --color-dark-surface-hover: #21262d;
+  --color-dark-border: #30363d;
+  --color-dark-text: #c9d1d9;
+  --color-dark-text-secondary: #8b949e;
+  --color-dark-text-muted: #484f58;
+
+  /* ==========================================
      Z-INDEX
      ========================================== */
   --z-base: 0;
