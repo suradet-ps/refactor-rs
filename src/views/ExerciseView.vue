@@ -744,6 +744,23 @@ onUnmounted(() => {
 
   .panels {
     min-height: 600px;
+    padding: var(--space-sm);
+  }
+
+  .editor-panel {
+    max-height: 50vh;
+  }
+
+  .output-panel {
+    min-height: 100px;
+  }
+
+  .modal-overlay {
+    padding: var(--space-sm);
+  }
+
+  .modal {
+    height: 90vh;
   }
 
   .exercise-header {
