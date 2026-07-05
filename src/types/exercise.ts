@@ -6,8 +6,3 @@ export interface Exercise {
   starterCode: string
   solutionCode: string
 }
-
-export interface ExerciseState {
-  code: string
-  completed: boolean
-}
