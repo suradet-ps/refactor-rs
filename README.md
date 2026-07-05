@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/og.png" alt="refacto.rs — Rust Refactoring Exercises" width="100%" />
+</p>
+
 # refacto.rs
 
 [![Vue.js](https://img.shields.io/badge/Vue.js-3.5-42b883?logo=vue.js&logoColor=white)](https://vuejs.org/)
