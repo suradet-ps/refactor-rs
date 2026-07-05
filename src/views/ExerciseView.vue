@@ -53,7 +53,7 @@
             <X :size="18" />
           </button>
         </div>
-        <pre class="modal-code"><code>{{ exercise.solutionCode }}</code></pre>
+        <div ref="solutionContainer" class="modal-code" />
       </div>
     </div>
 
@@ -105,8 +105,10 @@ const showSolution = ref(false)
 const runningAction = ref<'run' | 'test' | null>(null)
 const outputContainer = ref<HTMLElement | null>(null)
 const editorContainer = ref<HTMLElement | null>(null)
+const solutionContainer = ref<HTMLElement | null>(null)
 
 let editorView: EditorView | null = null
+let solutionView: EditorView | null = null
 
 const completedKey = 'refacto-completed'
 const codeKey = 'refacto-code'
@@ -280,6 +282,36 @@ function markCompleted() {
   }
 }
 
+function createSolutionEditor() {
+  if (!solutionContainer.value || !exercise.value) return
+
+  solutionView = new EditorView({
+    doc: exercise.value.solutionCode,
+    extensions: [
+      lineNumbers(),
+      rust(),
+      oneDark,
+      EditorView.lineWrapping,
+      EditorState.readOnly.of(true),
+      EditorView.editable.of(false),
+    ],
+    parent: solutionContainer.value,
+  })
+}
+
+function destroySolutionEditor() {
+  solutionView?.destroy()
+  solutionView = null
+}
+
+watch(showSolution, (val) => {
+  if (val) {
+    nextTick(() => createSolutionEditor())
+  } else {
+    destroySolutionEditor()
+  }
+})
+
 watch(() => route.params.id, loadCode, { immediate: true })
 
 onMounted(() => {
@@ -427,7 +459,7 @@ onUnmounted(() => {
   border-radius: var(--radius-md);
   width: 100%;
   max-width: 720px;
-  max-height: 80vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -465,14 +497,23 @@ onUnmounted(() => {
 }
 
 .modal-code {
-  margin: 0;
-  padding: var(--space-md);
-  background: #0d1117;
-  color: #c9d1d9;
-  font: var(--text-code);
-  line-height: 1.6;
-  overflow: auto;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.modal-code :deep(.cm-editor) {
+  height: 100%;
+}
+
+.modal-code :deep(.cm-scroller) {
+  overflow: auto;
+}
+
+.modal-code :deep(.cm-gutters) {
+  background: #0d1117;
+  border-right: 1px solid #30363d;
+  color: #484f58;
 }
 
 .not-found {
