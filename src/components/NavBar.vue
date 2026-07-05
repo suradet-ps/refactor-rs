@@ -8,7 +8,7 @@
       <div class="navbar-links">
         <router-link to="/" class="nav-link">Exercises</router-link>
         <a
-          href="https://github.com/unbalanced-pineapple/refactoring-rust"
+          href="https://github.com/suradet-ps/refactor-rs"
           target="_blank"
           rel="noopener noreferrer"
           class="nav-link"
