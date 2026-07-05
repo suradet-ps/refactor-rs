@@ -11,7 +11,7 @@ Interactive platform for learning idiomatic Rust through refactoring exercises. 
 
 ## Features
 
-- **20 curated exercises** — from basic to advanced refactoring patterns
+- **27 curated exercises** — from basic to advanced refactoring patterns
 - **In-browser code editor** — Rust syntax highlighting with CodeMirror 6
 - **Live execution** — run code or tests via Rust Playground API
 - **Dark terminal UI** — code editor on top, output below
@@ -68,6 +68,13 @@ bun run dev
 | 18 | Parse SRT timestamp | `split_once` |
 | 19 | Iterators | Custom iterator, `from_fn` |
 | 20 | Transformer | Pattern matching, `map` |
+| 21 | Fun strings ext | Composing string helpers |
+| 22 | Quicksort | Recursive partitioning |
+| 23 | IBAN prefix check | Byte-level validation |
+| 24 | HTTP response router | Range patterns in match |
+| 25 | Config loader | Generic helpers, `and_then` |
+| 26 | Env file parser | `split_once`, `filter_map` |
+| 27 | Mini Redis | Enum-based command routing |
 
 ## Contributing
 
