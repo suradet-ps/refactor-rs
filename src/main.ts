@@ -7,6 +7,7 @@ import './design/components.css'
 const app = createApp(App)
 
 app.config.errorHandler = (err, _instance, info) => {
+  // biome-ignore lint/suspicious/noConsole: intentional error logging
   console.error('[Global Error]', err, info)
 }
 
