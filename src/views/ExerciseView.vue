@@ -40,8 +40,8 @@
           </button>
           <button
             class="btn-done"
+            :class="{ active: isCompleted }"
             @click="markCompleted"
-            :disabled="isCompleted"
           >
             <CheckCircle v-if="isCompleted" :size="14" />
             <Circle v-else :size="14" />
@@ -124,16 +124,18 @@ const exercise = computed(() => {
   return exercises.find(e => e.id === id)
 })
 
-const isCompleted = computed(() => {
-  if (!exercise.value) return false
+const isCompleted = ref(false)
+
+function loadCompleted() {
+  if (!exercise.value) return
   try {
     const data = localStorage.getItem(completedKey)
     const completed: number[] = data ? JSON.parse(data) : []
-    return completed.includes(exercise.value.id)
+    isCompleted.value = completed.includes(exercise.value.id)
   } catch {
-    return false
+    isCompleted.value = false
   }
-})
+}
 
 function createEditor() {
   if (!editorContainer.value) return
@@ -184,6 +186,7 @@ function loadCode() {
   code.value = saved || exercise.value.starterCode
   output.value = ''
   setEditorContent(code.value)
+  loadCompleted()
 }
 
 function saveCode() {
@@ -279,10 +282,14 @@ function markCompleted() {
   try {
     const data = localStorage.getItem(completedKey)
     const completed: number[] = data ? JSON.parse(data) : []
-    if (!completed.includes(exercise.value.id)) {
+    const idx = completed.indexOf(exercise.value.id)
+    if (idx === -1) {
       completed.push(exercise.value.id)
-      localStorage.setItem(completedKey, JSON.stringify(completed))
+    } else {
+      completed.splice(idx, 1)
     }
+    localStorage.setItem(completedKey, JSON.stringify(completed))
+    isCompleted.value = !isCompleted.value
   } catch {
     // ignore
   }
@@ -472,18 +479,20 @@ onUnmounted(() => {
   transition: all 0.15s;
 }
 
-.btn-done:hover:not(:disabled) {
+.btn-done:hover {
   background: var(--color-canvas-soft);
   color: var(--color-ink);
   border-color: var(--color-body-mid);
 }
 
-.btn-done:disabled {
+.btn-done.active {
   background: var(--color-primary);
   color: var(--color-on-primary);
   border-color: var(--color-primary);
-  opacity: 0.8;
-  cursor: default;
+}
+
+.btn-done.active:hover {
+  opacity: 0.85;
 }
 
 .panels {
