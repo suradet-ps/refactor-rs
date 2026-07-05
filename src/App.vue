@@ -2,12 +2,15 @@
   <div class="app">
     <NavBar />
     <main class="app-main">
-      <router-view />
+      <ErrorBoundary>
+        <router-view />
+      </ErrorBoundary>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
+import ErrorBoundary from '@/components/ErrorBoundary.vue'
 import NavBar from '@/components/NavBar.vue'
 </script>
 
