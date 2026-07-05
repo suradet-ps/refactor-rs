@@ -90,18 +90,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { defaultKeymap, indentWithTab } from '@codemirror/commands'
+import { rust } from '@codemirror/lang-rust'
+import { EditorState } from '@codemirror/state'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { EditorView, keymap, lineNumbers } from '@codemirror/view'
+import { Bug, CheckCircle, Circle, Eye, EyeOff, Loader2, Play, RotateCcw, X } from 'lucide-vue-next'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { exercises } from '@/data/exercises'
-import {
-  Eye, EyeOff, CheckCircle, Circle,
-  RotateCcw, Play, Loader2, Bug, X
-} from 'lucide-vue-next'
-import { EditorView, keymap, lineNumbers } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
-import { rust } from '@codemirror/lang-rust'
-import { oneDark } from '@codemirror/theme-one-dark'
-import { defaultKeymap, indentWithTab } from '@codemirror/commands'
 
 const route = useRoute()
 
@@ -121,7 +118,7 @@ const codeKey = 'refacto-code'
 
 const exercise = computed(() => {
   const id = Number(route.params.id)
-  return exercises.find(e => e.id === id)
+  return exercises.find((e) => e.id === id)
 })
 
 const isCompleted = ref(false)

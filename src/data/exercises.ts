@@ -78,7 +78,7 @@ mod tests {
     fn unicode_uppercase() {
         assert!(starts_with_uppercase("Über"));
     }
-}`
+}`,
   },
   {
     id: 2,
@@ -156,13 +156,14 @@ mod tests {
         assert_eq!(describe(None), "nothing");
         assert_eq!(describe(Some(11)), "something else");
     }
-}`
+}`,
   },
   {
     id: 3,
     slug: 'even_numbers',
     title: 'Even numbers',
-    description: 'Return the even numbers below `max`. Can you return something lazier and more idiomatic instead?',
+    description:
+      'Return the even numbers below `max`. Can you return something lazier and more idiomatic instead?',
     starterCode: `//! Return the even numbers below \`max\`.
 //!
 //! This works right now, but it eagerly builds a whole \`Vec\` and hand-rolls
@@ -226,7 +227,7 @@ mod tests {
     fn odd_bound() {
         assert_eq!(evens(7), vec![0, 2, 4, 6]);
     }
-}`
+}`,
   },
   {
     id: 4,
@@ -286,7 +287,7 @@ mod tests {
     fn whole_unicode_string_fits() {
         assert_eq!(truncate("café", 5), "café");
     }
-}`
+}`,
   },
   {
     id: 5,
@@ -374,13 +375,14 @@ mod tests {
     fn dotfile_without_extension() {
         assert!(!is_rust_source_file(Path::new(".rs")));
     }
-}`
+}`,
   },
   {
     id: 6,
     slug: 'nesting',
     title: 'Nesting',
-    description: 'If the input is `Some` and not empty after trimming, return the uppercased trimmed text.',
+    description:
+      'If the input is `Some` and not empty after trimming, return the uppercased trimmed text.',
     starterCode: `//! If the input is \`Some\` and not empty after trimming, return the
 //! uppercased trimmed text. Otherwise return \`None\`.
 
@@ -460,7 +462,7 @@ mod tests {
     fn none_on_whitespace_only() {
         assert_eq!(shout(Some("   ")), None);
     }
-}`
+}`,
   },
   {
     id: 7,
@@ -531,13 +533,14 @@ mod tests {
         let values = vec![None, None, None];
         assert_eq!(sum_options(values), 0);
     }
-}`
+}`,
   },
   {
     id: 8,
     slug: 'parse_ints',
     title: 'Parse integers',
-    description: 'Parse every string in the input as `i32`. Return all parsed integers, or the first error encountered.',
+    description:
+      'Parse every string in the input as `i32`. Return all parsed integers, or the first error encountered.',
     starterCode: `//! Parse every string in the input as \`i32\`. Return all parsed
 //! integers, or the first error encountered.
 
@@ -606,7 +609,7 @@ mod tests {
     fn empty_input() {
         assert_eq!(parse_values(vec![]), Ok(vec![]));
     }
-}`
+}`,
   },
   {
     id: 9,
@@ -692,7 +695,7 @@ mod tests {
         let err = read_file_contents("/definitely/does/not/exist.txt").unwrap_err();
         assert_eq!(err.kind(), io::ErrorKind::NotFound);
     }
-}`
+}`,
   },
   {
     id: 10,
@@ -777,7 +780,7 @@ mod tests {
     fn non_numeric_rejected() {
         assert_eq!(parse_port("nope"), None);
     }
-}`
+}`,
   },
   {
     id: 11,
@@ -868,7 +871,7 @@ mod tests {
     fn all_the_same_collapses_to_one() {
         assert_eq!(dedup_runs(vec![7, 7, 7, 7]), vec![7]);
     }
-}`
+}`,
   },
   {
     id: 12,
@@ -963,13 +966,14 @@ mod tests {
         let ex = Some(HashSet::new());
         assert!(!is_excluded(&ex, Path::new("/tmp/foo")));
     }
-}`
+}`,
   },
   {
     id: 13,
     slug: 'spell_check',
     title: 'Spell check',
-    description: 'Return the words from `words` that are not in `dict`. The check is case-insensitive.',
+    description:
+      'Return the words from `words` that are not in `dict`. The check is case-insensitive.',
     starterCode: `//! Return the words from \`words\` that are not in \`dict\`. The check
 //! is case-insensitive.
 
@@ -1044,13 +1048,14 @@ mod tests {
         let dict = words(&["a", "b"]);
         assert!(spell_check(&vec![], &dict).is_empty());
     }
-}`
+}`,
   },
   {
     id: 14,
     slug: 'room_occupancy',
     title: 'Room occupancy',
-    description: 'Compute totals across a list of room occupancies. Notice the repetition between the helpers.',
+    description:
+      'Compute totals across a list of room occupancies. Notice the repetition between the helpers.',
     starterCode: `//! Compute totals across a list of room occupancies. Notice the
 //! repetition between the helpers - every one of them follows the same
 //! shape.
@@ -1194,7 +1199,7 @@ mod tests {
     fn flattens_ages() {
         assert_eq!(child_ages(&sample()), vec![3, 6]);
     }
-}`
+}`,
   },
   {
     id: 15,
@@ -1275,7 +1280,7 @@ mod tests {
     fn negatives() {
         assert_eq!(highest_and_lowest("-1 -2 -3"), (-1, -3));
     }
-}`
+}`,
   },
   {
     id: 16,
@@ -1362,13 +1367,14 @@ mod tests {
         let input = [1, 2, 3, 4];
         assert!(input.contains(&most_common(&input)));
     }
-}`
+}`,
   },
   {
     id: 17,
     slug: 'trim_log_line',
     title: 'Trim log line',
-    description: 'Clean up a log line by trimming whitespace, collapsing runs of internal whitespace, and removing a leading tag.',
+    description:
+      'Clean up a log line by trimming whitespace, collapsing runs of internal whitespace, and removing a leading tag.',
     starterCode: `//! Clean up a log line by trimming whitespace, collapsing runs of
 //! internal whitespace, and removing a leading \`[INFO]\`, \`[WARN]\`, or
 //! \`[ERROR]\` tag.
@@ -1479,7 +1485,7 @@ mod tests {
     fn keeps_line_without_tag() {
         assert_eq!(trim_log_line("plain message"), "plain message");
     }
-}`
+}`,
   },
   {
     id: 18,
@@ -1573,7 +1579,7 @@ mod tests {
     fn wrong_separator_returns_none() {
         assert_eq!(parse_srt_timestamp("00:01:23.456"), None);
     }
-}`
+}`,
   },
   {
     id: 19,
@@ -1662,7 +1668,7 @@ mod tests {
         assert_eq!(fib(1), 1);
         assert_eq!(fib(10), 55);
     }
-}`
+}`,
   },
   {
     id: 20,
@@ -1791,7 +1797,7 @@ mod tests {
         let out = apply_commands(vec![("x".into(), Command::Append(0))]);
         assert_eq!(out, vec!["x".to_string()]);
     }
-}`
+}`,
   },
   {
     id: 21,
@@ -1893,13 +1899,14 @@ mod tests {
     fn composes_inside_out() {
         assert_eq!(sparkle(&shout("  hi  ".trim())), "✨ HI ✨");
     }
-}`
+}`,
   },
   {
     id: 22,
     slug: 'quicksort',
     title: 'Quicksort',
-    description: 'Sort a slice of integers with quicksort. Rewrite it so it reads the way you\'d explain quicksort on a whiteboard.',
+    description:
+      "Sort a slice of integers with quicksort. Rewrite it so it reads the way you'd explain quicksort on a whiteboard.",
     starterCode: `//! Sort a slice of integers with quicksort.
 //!
 //! This version works, but it's a mouthful: it copies into a \`Vec\`,
@@ -2015,7 +2022,7 @@ mod tests {
     fn duplicates_and_negatives() {
         assert_eq!(quicksort(&[5, -1, 5, 0, -1]), vec![-1, -1, 0, 5, 5]);
     }
-}`
+}`,
   },
   {
     id: 23,
@@ -2160,7 +2167,7 @@ mod tests {
     fn non_digits_in_check() {
         assert!(!is_valid_iban("DEAB370400440532013000"));
     }
-}`
+}`,
   },
   {
     id: 24,
@@ -2327,7 +2334,7 @@ mod tests {
         };
         assert!(matches!(handle_response(r), Action::Fail(_)));
     }
-}`
+}`,
   },
   {
     id: 25,
@@ -2466,7 +2473,7 @@ mod tests {
         assert!(get_debug(&cfg(&[("DEBUG", "true")])));
         assert!(!get_debug(&cfg(&[("DEBUG", "no")])));
     }
-}`
+}`,
   },
   {
     id: 26,
@@ -2622,7 +2629,7 @@ mod tests {
         let env = parse("EMPTY=");
         assert_eq!(env.get("EMPTY").map(String::as_str), Some(""));
     }
-}`
+}`,
   },
   {
     id: 27,
@@ -2824,6 +2831,6 @@ mod tests {
         let reply = handle(&mut db, &["FROBNICATE", "x"]);
         assert!(reply.starts_with("-ERR"));
     }
-}`
-  }
+}`,
+  },
 ]

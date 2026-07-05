@@ -2,7 +2,7 @@
    refacto.rs Base Styles
    ============================================ */
 
-@import './tokens.css';
+@import "./tokens.css";
 
 /* Reset */
 *,
@@ -26,7 +26,12 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-ink);
 }
 
@@ -40,7 +45,8 @@ a:hover {
   color: var(--color-primary-hover);
 }
 
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
 }
 
