@@ -124,4 +124,4 @@ first to discuss a change.
   ─────────────────────────────────────────
 ```
 
-[MIT](LICENSE)
+Source code under the [MIT License](LICENSE).
