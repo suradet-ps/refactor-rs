@@ -1,93 +1,127 @@
-<p align="center">
-  <img src="public/og.png" alt="refacto.rs — Rust Refactoring Exercises" width="100%" />
-</p>
-
 # refacto.rs
 
-[![Vue.js](https://img.shields.io/badge/Vue.js-3.5-42b883?logo=vue.js&logoColor=white)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.1-646cff?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Rust](https://img.shields.io/badge/Rust-2021-dea584?logo=rust&logoColor=white)](https://www.rust-lang.org/)
-[![Bun](https://img.shields.io/badge/Bun-1.3-fbf0df?logo=bun&logoColor=black)](https://bun.sh/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-
-Interactive platform for learning idiomatic Rust through refactoring exercises. Edit code, run it, and see results — all in one screen.
-
-## Features
-
-- **27 curated exercises** — from basic to advanced refactoring patterns
-- **In-browser code editor** — Rust syntax highlighting with CodeMirror 6
-- **Live execution** — run code or tests via Rust Playground API
-- **Dark terminal UI** — code editor on top, output below
-- **Progress tracking** — completed exercises saved to localStorage
-- **Solution viewer** — modal popup with idiomatic solutions
-
-## Getting Started
-
-```bash
-# Clone the repository
-git clone https://github.com/suradet-ps/refactor-rs.git
-cd refactor-rs
-
-# Install dependencies
-bun install
-
-# Start development server
-bun run dev
+```
+██████╗ ███████╗███████╗ █████╗  ██████╗████████╗ ██████╗ ██████╗
+██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗
+██████╔╝█████╗  █████╗  ███████║██║        ██║   ██║   ██║██████╔╝
+██╔══██╗██╔══╝  ██╔══╝  ██╔══██║██║        ██║   ██║   ██║██╔══██╗
+██║  ██║███████╗██║     ██║  ██║╚██████╗   ██║   ╚██████╔╝██║  ██║
+╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝ ╚═════╝   ╚═╝ ╚═════╝ ╚═╝  ╚═╝
 ```
 
-## Tech Stack
+---
 
-| Layer | Technology |
-|-------|------------|
-| Framework | [Vue 3](https://vuejs.org/) + Composition API |
-| Language | [TypeScript](https://www.typescriptlang.org/) |
-| Build | [Vite](https://vitejs.dev/) |
-| Package Manager | [Bun](https://bun.sh/) |
-| Code Editor | [CodeMirror 6](https://codemirror.net/) |
-| Rust Backend | [Rust Playground API](https://play.rust-lang.org/) |
-| Icons | [Lucide](https://lucide.dev/) |
+## ◆ PULSE
 
-## Exercises
+Rust is learned in the refactor, not in the tutorial. refacto.rs is an
+interactive platform for idiomatic Rust: 27 curated exercises, each a
+piece of working-but-clunky code, each with a destination in mind -
+`is_some_and`, `and_then` chaining, `split_once`, `from_fn`, a mini
+Redis of enum routing. Edit in a CodeMirror editor, run against the
+Rust Playground, watch the compiler answer - all in one dark terminal
+screen.
 
-| # | Title | Topic |
-|---|-------|-------|
-| 1 | Starts with uppercase | `&str` vs `String`, `is_some_and` |
-| 2 | Better match | Match arm merging |
-| 3 | Even numbers | Iterators, `step_by` |
-| 4 | Truncate string | `chars().take()` |
-| 5 | Path extension | `is_some_and` on `Option` |
-| 6 | Nesting | `and_then` chaining |
-| 7 | Optional values | `flatten`, `sum` |
-| 8 | Parse integers | `collect::<Result<_>>()` |
-| 9 | Error handling | `?` operator |
-| 10 | Parse port | Match with binding |
-| 11 | Dedup runs | `dedup()` |
-| 12 | Excluded path | `any()` |
-| 13 | Spell check | `filter`, case-insensitive |
-| 14 | Room occupancy | Iterator adapters |
-| 15 | Highest and lowest | `max`, `min` |
-| 16 | Mode | `max_by_key` |
-| 17 | Trim log line | `split_whitespace` |
-| 18 | Parse SRT timestamp | `split_once` |
-| 19 | Iterators | Custom iterator, `from_fn` |
-| 20 | Transformer | Pattern matching, `map` |
-| 21 | Fun strings ext | Composing string helpers |
-| 22 | Quicksort | Recursive partitioning |
-| 23 | IBAN prefix check | Byte-level validation |
-| 24 | HTTP response router | Range patterns in match |
-| 25 | Config loader | Generic helpers, `and_then` |
-| 26 | Env file parser | `split_once`, `filter_map` |
-| 27 | Mini Redis | Enum-based command routing |
+| 27 exercises ▣ | Live run ▣ | Progress ▣ | Solutions ▣ |
+|---|---|---|---|
 
-## Contributing
+*The loop - edit, run, learn, advance - is sealed.*
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+> Built with Vue 3 + TypeScript + CodeMirror 6, executed by the Rust
+> Playground API - the compiler is the teacher's assistant.
+>
+> **suradet-ps**, artifact keeper
 
-## Acknowledgements
+---
 
-Exercises are based on [Refactoring Rust](https://github.com/corrode/refactoring-rust) by [corrode](https://github.com/corrode) — a hands-on workshop for writing more idiomatic, maintainable Rust.
+## ◆ IGNITION
 
-## License
+One runtime, three commands.
+
+```
+⟫ git clone https://github.com/suradet-ps/refactor-rs.git
+⟫ cd refactor-rs
+⟫ bun install
+⟫ bun run dev
+```
+
+<details>
+<summary>Prerequisites</summary>
+
+- [Bun](https://bun.sh/) - the package manager
+- An internet connection for the Rust Playground API during exercises
+
+</details>
+
+---
+
+## ◆ ANATOMY
+
+One screen, two panes, 27 doors into the standard library.
+
+- **Edits** - CodeMirror 6 renders Rust with syntax highlighting in
+  the editor pane; the code is the lesson and the workspace in one.
+- **Runs** - code and tests execute through the Rust Playground API,
+  with the output pane below - the compiler's verdict arrives where
+  the work happened.
+- **Progresses** - completed exercises persist to `localStorage`; the
+  nav arrows move prev and next through the course without losing
+  ground.
+- **Reveals** - the solution viewer opens each exercise's idiomatic
+  answer in a modal - the destination is shown after the attempt, not
+  before it.
+- **Serves** - a dark terminal UI tuned for the exercise loop: editor
+  above, output below, focus trap and Escape working for the keyboard
+  in between.
+
+---
+
+## ◆ RITUALS
+
+**The core ceremony** - one exercise, one refactor:
+
+1. Read the exercise: working code with a clunky shape and a named
+   target pattern.
+2. Edit in the pane - try the idiom the exercise is teaching.
+3. Run it. The compiler answers; the output pane reports.
+4. Passed? Progress is saved, the next arrow lights. Stuck? The
+   solution modal shows the idiomatic path after the honest attempt.
+
+**The ceremony of the compiler** - no hidden judge: the code runs
+against real Rust, and the result is the result. The Playground is the
+referee and the lesson is the difference between the two panes.
+
+**The ceremony of the attempt** - the solution stays behind the modal
+until the attempt has been made. Learning the destination matters
+less than having tried the route.
+
+---
+
+## ◆ ECHOES
+
+**Where this artifact is heading**
+
+```
+curate   ▸ 27 exercises, basic to advanced ─────────────────────────── ▸ sealed
+execute  ▸ Rust Playground run, tests included ─────────────────────── ▸ sealed
+persist  ▸ localStorage progress, prev/next nav ────────────────────── ▸ sealed
+reveal   ▸ solution modal after the attempt ────────────────────────── ▸ sealed
+```
+
+**Raising the artifact** - the exercises descend from
+[Refactoring Rust](https://github.com/corrode/refactoring-rust) by
+corrode; the quality bar is Biome and the Vitest suite. Open an issue
+first to discuss a change.
+
+**Status** - CI gates every push on the way to Vercel.
+[Watch the gates](.github/workflows).
+
+---
+
+```
+  ─────────────────────────────────────────
+   Nobody learns Rust by reading it.
+   Everyone learns Rust by reshaping it.
+  ─────────────────────────────────────────
+```
 
 [MIT](LICENSE)
