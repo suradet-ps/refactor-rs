@@ -1,13 +1,11 @@
 # refacto.rs
 
-```
-██████╗ ███████╗███████╗ █████╗  ██████╗████████╗ ██████╗ ██████╗
-██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗
-██████╔╝█████╗  █████╗  ███████║██║        ██║   ██║   ██║██████╔╝
-██╔══██╗██╔══╝  ██╔══╝  ██╔══██║██║        ██║   ██║   ██║██╔══██╗
-██║  ██║███████╗██║     ██║  ██║╚██████╗   ██║   ╚██████╔╝██║  ██║
-╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝ ╚═════╝   ╚═╝ ╚═════╝ ╚═╝  ╚═╝
-```
+[![CI](https://github.com/suradet-ps/refactor-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/suradet-ps/refactor-rs/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Vue v3](https://img.shields.io/badge/Vue-v3-4FC08D.svg?logo=vuedotjs&logoColor=white)](https://vuejs.org/)
+[![TypeScript v6](https://img.shields.io/badge/TypeScript-v6-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite v8](https://img.shields.io/badge/Vite-v8-646CFF.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suradet-ps/refactor-rs/issues)
 
 ---
 
